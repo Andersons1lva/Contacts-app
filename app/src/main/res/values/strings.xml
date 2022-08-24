@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Contacts</string>
     <string name="txt_contact_name">Contact Name</string>
+    <string name="Edt_enter_name">Enter Name</string>
+    <string name="Edt_enter_number">Enter Number</string>
+    <string name="Edt_enter_email_address">Enter Email Address</string>
+    <string name="Btn_save_contact">Save Contact</string>
 </resources>

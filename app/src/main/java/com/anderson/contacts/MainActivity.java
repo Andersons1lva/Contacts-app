@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         contactsModalArrayList = new ArrayList<>();
-        contactRV = findViewById(R.id.idRVContacts);
+        contactRV = binding.idRVContacts;
         FloatingActionButton addNewContactFAB = findViewById(R.id.idFABadd);
-        loadingPB = findViewById(R.id.idPBLoading);
+        loadingPB = binding.idPBLoading;
 
         prepareContactRV();
 
