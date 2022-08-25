@@ -2,21 +2,12 @@ package com.anderson.contacts;
 
 import static com.karumi.dexter.Dexter.withActivity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.audiofx.Equalizer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.Menu;
@@ -27,15 +18,18 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.anderson.contacts.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.DexterBuilder;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.ArrayList;
@@ -57,30 +51,26 @@ public class MainActivity extends AppCompatActivity {
 
         contactsModalArrayList = new ArrayList<>();
         contactRV = binding.idRVContacts;
-        FloatingActionButton addNewContactFAB = findViewById(R.id.idFABadd);
+        FloatingActionButton addNewContactFAB = binding.idFABadd;
         loadingPB = binding.idPBLoading;
 
         prepareContactRV();
-
+        exibirProgress();
         requestPermissions();
 
-        addNewContactFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CreateNewContactActivity.class);
-                startActivity(intent);
-            }
+        addNewContactFAB.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, CreateNewContactActivity.class);
+            startActivity(intent);
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(@NonNull Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu,menu);
 
-        MenuItem serchViewItem = menu.findItem(R.id.app_bar_search);
-
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(serchViewItem);
+        MenuItem searchViewItem = menu.findItem(R.id.app_bar_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
             @Override
@@ -145,12 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         permissionToken.continuePermissionRequest();
                     }
 
-                }).withErrorListener(new PermissionRequestErrorListener() {
-                    @Override
-                    public void onError(DexterError dexterError) {
-                        Toast.makeText(getApplicationContext(),"Error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                }).onSameThread().check();
+                }).withErrorListener(dexterError -> Toast.makeText(getApplicationContext(),"Error occurred", Toast.LENGTH_SHORT).show()).onSameThread().check();
 
     }
 
@@ -158,31 +143,23 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Need Permissions");
         builder.setMessage("This app needs permission to use this feature. You can them in app settings. ");
-        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
+            dialog.cancel();
 
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivityForResult(intent, 101);
-            }
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, 101);
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
     }
 
     @SuppressLint({"Range", "NotifyDataSetChanged"})
     private void getContacts() {
 
-        String contactId = "";
-        String displayName = "";
+        String contactId;
+        String displayName;
 
         Cursor cursor = getContentResolver()
                 .query(ContactsContract.Contacts
@@ -209,5 +186,8 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         loadingPB.setVisibility(View.GONE);
         contactsRVAdapter.notifyDataSetChanged();
+    }
+    public void exibirProgress(){
+       // loadingPB.setVisibility(true ? View.VISIBLE : View.GONE);
     }
 }
