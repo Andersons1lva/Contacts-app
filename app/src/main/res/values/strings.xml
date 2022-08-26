@@ -5,4 +5,11 @@
     <string name="Edt_enter_number">Enter Number</string>
     <string name="Edt_enter_email_address">Enter Email Address</string>
     <string name="Btn_save_contact">Save Contact</string>
+    <string name="TV_name">Name</string>
+    <string name="iv_Contact">Imagem Contato</string>
+    <string name="iv_contact">Imagem Contato</string>
+    <string name="Iv_phone">Phone</string>
+    <string name="iv_message">Imagem mensagem</string>
+    <string name="iv_call">imagem Chamada</string>
+    <string name="btn_add">Button Add</string>
 </resources>

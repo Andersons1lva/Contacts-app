@@ -15,27 +15,24 @@ import com.anderson.contacts.databinding.ActivityContactDetailBinding;
 
 public class ContactDetailActivity extends AppCompatActivity {
 
-    private ActivityContactDetailBinding binding;
-    private String contactName, contactNumber;
-    private TextView contactTV, nameTV;
-    private ImageView contactIV, callIV, messageIV;
+    private String contactNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityContactDetailBinding.inflate(getLayoutInflater());
+        com.anderson.contacts.databinding.ActivityContactDetailBinding binding = ActivityContactDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        contactName = getIntent().getStringExtra("name");
+        String contactName = getIntent().getStringExtra("name");
         contactNumber = getIntent().getStringExtra("contact");
 
-        nameTV = binding.idTVName;
-        contactIV = binding.idIVContact;
-        contactTV = binding.idTVPhone;
+        TextView nameTV = binding.idTVName;
+        ImageView contactIV = binding.idIVContact;
+        TextView contactTV = binding.idTVPhone;
         nameTV.setText(contactName);
         contactTV.setText(contactNumber);
-        callIV = binding.idIVCall;
-        messageIV = binding.idIVMessege;
+        ImageView callIV = binding.idIVCall;
+        ImageView messageIV = binding.idIVMessege;
 
         callIV.setOnClickListener(view -> makeCall(contactNumber));
         messageIV.setOnClickListener(view -> sendMessage(contactNumber));
@@ -43,7 +40,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     private void sendMessage(String contactNumber) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms" + contactNumber));
-        intent.putExtra("sms_body", "Enter your messenge");
+        intent.putExtra("sms_body", "Enter your message");
         startActivity(intent);
     }
 

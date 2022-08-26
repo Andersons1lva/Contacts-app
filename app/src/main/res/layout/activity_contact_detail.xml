@@ -15,6 +15,7 @@
         android:padding="50dp"
         android:src="@drawable/ic_account"
         app:tint="@color/white"/>
+
     <TextView
         android:id="@+id/idTVName"
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         android:layout_below="@+id/idIVContact"
         android:background="@color/purple_200"
         android:padding="8dp"
-        android:text="Name"
+        android:text="@string/TV_name"
         android:textColor="@color/white"
         android:textSize="18sp"/>
 
@@ -58,8 +59,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toStartOf="@+id/idIVMessege"
                 android:layout_toEndOf="@id/idIVCall"
-                android:layout_toRightOf="@id/idIVCall"
-                android:text="Phone"/>
+                android:text="@string/Iv_phone"/>
 
             <ImageView
                 android:id="@+id/idIVMessege"
@@ -72,7 +72,8 @@
                 android:layout_marginBottom="8dp"
                 android:padding="4dp"
                 android:src="@drawable/ic_message"
-                app:tint="@color/purple_700" />
+                app:tint="@color/purple_700"/>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

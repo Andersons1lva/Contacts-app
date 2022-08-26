@@ -23,6 +23,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anderson.contacts.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -41,16 +42,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView contactRV;
     private ContactsRVAdapter contactRVAdapter;
     private ProgressBar loadingPB;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         contactsModalArrayList = new ArrayList<>();
-        contactRV = findViewById(R.id.idRVContacts);
-        FloatingActionButton addNewContactFAB = findViewById(R.id.idFABadd);
-        loadingPB = findViewById(R.id.idPBLoading);
+        contactRV = binding.idRVContacts;
+        FloatingActionButton addNewContactFAB = binding.idFABadd;
+        loadingPB = binding.idPBLoading;
 
         prepareContactRV();
 
