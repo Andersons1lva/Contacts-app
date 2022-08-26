@@ -18,7 +18,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     private ActivityContactDetailBinding binding;
     private String contactName, contactNumber;
     private TextView contactTV, nameTV;
-    private ImageView contactIV, callIV, messegeIV;
+    private ImageView contactIV, callIV, messageIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,13 @@ public class ContactDetailActivity extends AppCompatActivity {
         nameTV.setText(contactName);
         contactTV.setText(contactNumber);
         callIV = binding.idIVCall;
-        messegeIV = binding.idIVMessege;
+        messageIV = binding.idIVMessege;
 
         callIV.setOnClickListener(view -> makeCall(contactNumber));
-        messegeIV.setOnClickListener(view -> sendMenssege(contactNumber));
+        messageIV.setOnClickListener(view -> sendMessage(contactNumber));
     }
 
-    private void sendMenssege(String contactNumber) {
+    private void sendMessage(String contactNumber) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms" + contactNumber));
         intent.putExtra("sms_body", "Enter your messenge");
         startActivity(intent);

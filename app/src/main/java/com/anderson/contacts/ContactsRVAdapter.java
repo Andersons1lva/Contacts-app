@@ -25,7 +25,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
     @NonNull
     @Override
     public ContactsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ContactsRVAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.contacts_rv_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.contacts_rv_item, parent, false));
     }
 
 
@@ -41,15 +41,12 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         holder.contactTV.setText(modal.getUserName());
         int color= ((int)(Math.random()*16777215)) | (0xFF << 24);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, ContactDetailActivity.class);
-                i.putExtra("name", modal.getUserName());
-                i.putExtra("contact", modal.getContactNumber());
+        holder.itemView.setOnClickListener(view -> {
+            Intent i = new Intent(context, ContactDetailActivity.class);
+            i.putExtra("name", modal.getUserName());
+            i.putExtra("contact", modal.getContactNumber());
 
-                context.startActivity(i);
-            }
+            context.startActivity(i);
         });
     }
 
@@ -58,7 +55,7 @@ public class ContactsRVAdapter extends RecyclerView.Adapter<ContactsRVAdapter.Vi
         return contactsModalArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView contactIV;
         private TextView contactTV;
